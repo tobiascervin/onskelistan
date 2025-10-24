@@ -39,6 +39,13 @@ export interface Translations {
   swedish: string;
   english: string;
 
+  // Item actions
+  deleteItem: string;
+  editItem: string;
+  saveEdit: string;
+  cancelEdit: string;
+  confirmDelete: string;
+
   // Errors
   errorPrefix: string;
   errorNoName: string;
@@ -48,6 +55,8 @@ export interface Translations {
   errorClaimFailed: string;
   errorAddSublist: string;
   errorAddItem: string;
+  errorDeleteItem: string;
+  errorEditItem: string;
   errorNotConfigured: string;
 }
 
@@ -79,6 +88,13 @@ const translations: Record<Language, Translations> = {
     listWarning: "⚠️ Kom ihåg att spara länken eller exportera som JSON för att komma åt listan senare",
     continueRecentList: "Fortsätt på senaste lista",
 
+    // Item actions
+    deleteItem: "Ta bort",
+    editItem: "Redigera",
+    saveEdit: "Spara",
+    cancelEdit: "Avbryt",
+    confirmDelete: "Är du säker på att du vill ta bort denna önskning?",
+
     // Toolbar - Right
     settings: "Inställningar",
     theme: "Tema",
@@ -97,6 +113,8 @@ const translations: Record<Language, Translations> = {
     errorClaimFailed: "Kunde inte paxa/av-paxa önskning",
     errorAddSublist: "Kunde inte lägga till person/kategori",
     errorAddItem: "Kunde inte lägga till önskning",
+    errorDeleteItem: "Kunde inte ta bort önskning",
+    errorEditItem: "Kunde inte redigera önskning",
     errorNotConfigured:
       "Supabase är inte konfigurerad. Se supabase/README.md för instruktioner.",
   },
@@ -127,6 +145,13 @@ const translations: Record<Language, Translations> = {
     listWarning: "⚠️ Remember to save the URL or export as JSON to access your list later",
     continueRecentList: "Continue with recent list",
 
+    // Item actions
+    deleteItem: "Delete",
+    editItem: "Edit",
+    saveEdit: "Save",
+    cancelEdit: "Cancel",
+    confirmDelete: "Are you sure you want to delete this wish?",
+
     // Toolbar - Right
     settings: "Settings",
     theme: "Theme",
@@ -145,6 +170,8 @@ const translations: Record<Language, Translations> = {
     errorClaimFailed: "Could not claim/unclaim wish",
     errorAddSublist: "Could not add person/category",
     errorAddItem: "Could not add wish",
+    errorDeleteItem: "Could not delete wish",
+    errorEditItem: "Could not edit wish",
     errorNotConfigured:
       "Supabase is not configured. See supabase/README.md for instructions.",
   },

@@ -280,11 +280,90 @@ body {
     font-size: 17px;
     color: var(--text-primary);
     transition: all 0.2s;
+    flex: 1;
 }
 
 .list-item.claimed .item-text {
     text-decoration: line-through;
     color: var(--text-secondary);
+}
+
+/* Delete button */
+.delete-item-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.list-item:hover .delete-item-btn {
+    opacity: 1;
+}
+
+.delete-item-btn:hover {
+    transform: scale(1.2);
+    color: #dc3545;
+}
+
+/* Edit mode */
+.list-item.editing {
+    background: var(--bg-hover);
+    cursor: default;
+}
+
+.list-item.editing:hover {
+    background: var(--bg-hover);
+}
+
+.edit-input {
+    flex: 1;
+    border: 1px solid var(--btn-primary);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-size: 17px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    outline: none;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.edit-btn {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.edit-btn.save {
+    background: var(--btn-primary);
+    color: white;
+}
+
+.edit-btn.save:hover {
+    background: var(--btn-primary-hover);
+}
+
+.edit-btn.cancel {
+    background: var(--btn-secondary);
+    color: var(--text-primary);
+}
+
+.edit-btn.cancel:hover {
+    background: var(--toolbar-hover);
 }
 
 .tag {

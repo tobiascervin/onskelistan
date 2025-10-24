@@ -650,6 +650,117 @@ class WishListApp {
   }
 
   /**
+   * Delete an item
+   */
+  public async deleteItem(itemId: number): Promise<void> {
+    if (this.isLoading) return;
+
+    const t = languageService.getTranslations();
+    const confirmed = confirm(t.confirmDelete);
+
+    if (!confirmed) return;
+
+    this.isLoading = true;
+
+    try {
+      const { error } = await wishlistService.deleteItem(itemId);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // Realtime will trigger reload
+    } catch (error) {
+      this.showError(
+        error instanceof Error ? error.message : languageService.t('errorDeleteItem')
+      );
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * Start editing an item
+   */
+  public startEditItem(itemId: number): void {
+    const itemEl = document.querySelector(`.list-item[data-item-id="${itemId}"]`);
+    if (!itemEl) return;
+
+    // Add editing class
+    itemEl.classList.add('editing');
+
+    // Hide text and show input
+    const textEl = itemEl.querySelector('.item-text') as HTMLElement;
+    const inputEl = itemEl.querySelector('.edit-input') as HTMLInputElement;
+    const actionsEl = itemEl.querySelector('.edit-actions') as HTMLElement;
+
+    if (textEl) textEl.style.display = 'none';
+    if (inputEl) {
+      inputEl.style.display = 'block';
+      inputEl.focus();
+      inputEl.select();
+    }
+    if (actionsEl) actionsEl.style.display = 'flex';
+  }
+
+  /**
+   * Save edited item
+   */
+  public async saveEditItem(itemId: number): Promise<void> {
+    if (this.isLoading) return;
+
+    const inputEl = document.querySelector(
+      `.edit-input[data-item-id="${itemId}"]`
+    ) as HTMLInputElement;
+
+    if (!inputEl) return;
+
+    const newText = inputEl.value.trim();
+    if (!newText) return;
+
+    this.isLoading = true;
+
+    try {
+      const { error } = await wishlistService.updateItem(itemId, { text: newText });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // Exit edit mode
+      this.cancelEditItem(itemId);
+
+      // Realtime will trigger reload
+    } catch (error) {
+      this.showError(
+        error instanceof Error ? error.message : languageService.t('errorEditItem')
+      );
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * Cancel editing an item
+   */
+  public cancelEditItem(itemId: number): void {
+    const itemEl = document.querySelector(`.list-item[data-item-id="${itemId}"]`);
+    if (!itemEl) return;
+
+    // Remove editing class
+    itemEl.classList.remove('editing');
+
+    // Show text and hide input
+    const textEl = itemEl.querySelector('.item-text') as HTMLElement;
+    const inputEl = itemEl.querySelector('.edit-input') as HTMLInputElement;
+    const actionsEl = itemEl.querySelector('.edit-actions') as HTMLElement;
+
+    if (textEl) textEl.style.display = 'block';
+    if (inputEl) inputEl.style.display = 'none';
+    if (actionsEl) actionsEl.style.display = 'none';
+  }
+
+  /**
    * Toggle claim status on an item
    */
   public async toggleClaim(itemId: number): Promise<void> {
@@ -726,9 +837,21 @@ class WishListApp {
             <div class="list-item ${item.claimed ? 'claimed' : ''}" data-item-id="${item.id}">
               <div class="checkbox"></div>
               <div class="item-content">
-                <span class="item-text">${this.escapeHtml(item.text)}</span>
+                <span class="item-text" data-item-id="${item.id}">${this.escapeHtml(item.text)}</span>
+                <input
+                  type="text"
+                  class="edit-input"
+                  data-item-id="${item.id}"
+                  value="${this.escapeHtml(item.text)}"
+                  style="display: none;"
+                />
+                <div class="edit-actions" data-item-id="${item.id}" style="display: none;">
+                  <button class="edit-btn save" data-item-id="${item.id}">${t.saveEdit}</button>
+                  <button class="edit-btn cancel" data-item-id="${item.id}">${t.cancelEdit}</button>
+                </div>
                 ${item.claimed && item.claimed_by ? `<span class="tag">${this.escapeHtml(item.claimed_by)}</span>` : ''}
               </div>
+              <button class="delete-item-btn" data-item-id="${item.id}" title="${t.deleteItem}">🗑️</button>
             </div>
           `
             )
@@ -772,12 +895,77 @@ class WishListApp {
         });
       }
 
-      // Items for toggling claim
+      // Items for toggling claim, delete, and edit
       sublist.items.forEach((item) => {
-        const itemEl = container.querySelector(`[data-item-id="${item.id}"]`) as HTMLElement;
-        if (itemEl) {
-          itemEl.addEventListener('click', () => {
+        const itemEl = container.querySelector(
+          `.list-item[data-item-id="${item.id}"]`
+        ) as HTMLElement;
+        if (!itemEl) return;
+
+        // Toggle claim on checkbox or item text click (not in edit mode)
+        const checkbox = itemEl.querySelector('.checkbox') as HTMLElement;
+        const itemText = itemEl.querySelector('.item-text') as HTMLElement;
+
+        if (checkbox) {
+          checkbox.addEventListener('click', (e) => {
+            e.stopPropagation();
             this.toggleClaim(item.id);
+          });
+        }
+
+        if (itemText) {
+          itemText.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!itemEl.classList.contains('editing')) {
+              this.toggleClaim(item.id);
+            }
+          });
+
+          // Double-click to edit
+          itemText.addEventListener('dblclick', (e) => {
+            e.stopPropagation();
+            this.startEditItem(item.id);
+          });
+        }
+
+        // Delete button
+        const deleteBtn = itemEl.querySelector('.delete-item-btn') as HTMLButtonElement;
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.deleteItem(item.id);
+          });
+        }
+
+        // Edit input - Enter/Escape keys
+        const editInput = itemEl.querySelector('.edit-input') as HTMLInputElement;
+        if (editInput) {
+          editInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              this.saveEditItem(item.id);
+            } else if (e.key === 'Escape') {
+              e.preventDefault();
+              this.cancelEditItem(item.id);
+            }
+          });
+        }
+
+        // Edit Save button
+        const saveBtn = itemEl.querySelector('.edit-btn.save') as HTMLButtonElement;
+        if (saveBtn) {
+          saveBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.saveEditItem(item.id);
+          });
+        }
+
+        // Edit Cancel button
+        const cancelBtn = itemEl.querySelector('.edit-btn.cancel') as HTMLButtonElement;
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.cancelEditItem(item.id);
           });
         }
       });
