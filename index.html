@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="sv">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Skapa en smart önskelista</title>
+        <link rel="stylesheet" href="/src/styles/theme.css" />
+        <link rel="stylesheet" href="/src/styles/main.css" />
+    </head>
+    <body>
+        <div class="main-layout">
+            <!-- Left Toolbar (List Actions) -->
+            <div
+                id="toolbarLeft"
+                class="toolbar toolbar-left"
+                style="display: none"
+            >
+                <h3 id="toolbarLeftTitle">Lista</h3>
+                <button class="toolbar-button" id="saveJsonBtn">
+                    💾 <span id="saveJsonText">Spara JSON</span>
+                </button>
+                <button class="toolbar-button" id="loadJsonBtn">
+                    📂 <span id="loadJsonText">Ladda JSON</span>
+                </button>
+                <button class="toolbar-button" id="shareUrlBtn">
+                    🔗 <span id="shareUrlText">Dela länk</span>
+                </button>
+
+                <!-- Warning box -->
+                <div class="warning-box" id="listWarning">
+                    ⚠️ Kom ihåg att spara länken eller exportera som JSON för att komma åt listan senare
+                </div>
+            </div>
+
+            <!-- Main Container -->
+            <div class="container">
+                <!-- Start View -->
+                <div id="startView" class="view active">
+                    <div class="start-view">
+                        <h1>Önskelista</h1>
+
+                        <!-- Continue with recent list button (hidden by default) -->
+                        <button
+                            id="continueRecentBtn"
+                            class="button-secondary continue-recent-btn"
+                            style="display: none; margin-bottom: 20px;"
+                        >
+                            <span id="continueRecentText">Fortsätt på senaste lista</span>
+                        </button>
+
+                        <div class="start-form">
+                            <input
+                                type="text"
+                                id="listNameInput"
+                                placeholder="Namn på önskelistan..."
+                                autocomplete="off"
+                            />
+                            <div class="button-group">
+                                <button class="button-primary">Skapa ny</button>
+                                <button class="button-secondary">
+                                    Ladda
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List View -->
+                <div id="listView" class="view">
+                    <div class="header">
+                        <div class="header-with-back">
+                            <h1 id="listTitle">Önskelista</h1>
+                            <button class="back-button">Tillbaka</button>
+                        </div>
+                    </div>
+
+                    <div class="add-item">
+                        <input
+                            type="text"
+                            id="newSublistInput"
+                            placeholder="Lägg till person/kategori..."
+                            autocomplete="off"
+                        />
+                        <button>Lägg till</button>
+                    </div>
+
+                    <div id="sublistsContainer">
+                        <div class="empty-state">
+                            Lägg till en person eller kategori för att börja
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Toolbar (Settings) -->
+            <div class="toolbar toolbar-right">
+                <h3 id="toolbarRightTitle">Inställningar</h3>
+
+                <!-- Theme selector -->
+                <div class="theme-toggle">
+                    <div
+                        id="themeLabel"
+                        style="
+                            font-size: 14px;
+                            color: var(--text-secondary);
+                            margin-bottom: 4px;
+                        "
+                    >
+                        Tema
+                    </div>
+                    <button
+                        class="theme-option"
+                        id="lightThemeBtn"
+                        data-theme="light"
+                    >
+                        ☀️ <span id="lightThemeText">Ljust</span>
+                    </button>
+                    <button
+                        class="theme-option"
+                        id="darkThemeBtn"
+                        data-theme="dark"
+                    >
+                        🌙 <span id="darkThemeText">Mörkt</span>
+                    </button>
+                </div>
+
+                <!-- Language selector -->
+                <div class="theme-toggle" style="margin-top: 16px">
+                    <div
+                        id="languageLabel"
+                        style="
+                            font-size: 14px;
+                            color: var(--text-secondary);
+                            margin-bottom: 4px;
+                        "
+                    >
+                        Språk
+                    </div>
+                    <button class="theme-option" id="swedishBtn" data-lang="sv">
+                        🇸🇪 <span id="swedishText">Svenska</span>
+                    </button>
+                    <button class="theme-option" id="englishBtn" data-lang="en">
+                        🇬🇧 <span id="englishText">Engelska</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="/src/app.ts"></script>
+    </body>
+</html>

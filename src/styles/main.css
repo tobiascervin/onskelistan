@@ -1,0 +1,510 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Patrick Hand', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-body);
+    padding: 40px 20px;
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
+}
+
+.main-layout {
+    display: flex;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.container {
+    flex: 1;
+    background: var(--bg-container);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: background-color 0.3s ease;
+
+    /* Lined paper effect */
+    background-image:
+        repeating-linear-gradient(
+            transparent,
+            transparent 29px,
+            var(--line-color) 29px,
+            var(--line-color) 30px
+        );
+    background-size: 100% 30px;
+}
+
+/* Toolbars */
+.toolbar {
+    background: var(--toolbar-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--toolbar-border);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: sticky;
+    top: 40px;
+}
+
+.toolbar-left {
+    width: 200px;
+}
+
+.toolbar-right {
+    width: 150px;
+}
+
+.toolbar h3 {
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.toolbar-button {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar-button:hover {
+    background: var(--toolbar-hover);
+    border-color: var(--btn-primary);
+}
+
+.toolbar-button:last-of-type {
+    margin-bottom: 0;
+}
+
+.toolbar-button svg,
+.toolbar-button span {
+    font-size: 16px;
+}
+
+/* Warning box in left toolbar */
+.warning-box {
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--warning-text);
+    font-family: 'Patrick Hand', cursive;
+}
+
+/* Continue recent list button */
+.continue-recent-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px dashed var(--btn-primary);
+    background: transparent;
+    color: var(--btn-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.continue-recent-btn:hover {
+    background: var(--toolbar-hover);
+    border-color: var(--btn-primary-hover);
+    color: var(--btn-primary-hover);
+}
+
+/* Theme toggle specifically */
+.theme-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.theme-option {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-option:hover {
+    background: var(--toolbar-hover);
+}
+
+.theme-option.active {
+    background: var(--btn-primary);
+    color: white;
+    border-color: var(--btn-primary);
+}
+
+.header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    background: transparent;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.add-item {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    gap: 8px;
+    background: transparent;
+}
+
+.add-item input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 17px;
+    color: var(--text-primary);
+    outline: none;
+    font-family: 'Patrick Hand', cursive;
+    transition: color 0.3s ease;
+}
+
+.add-item input::placeholder {
+    color: var(--text-placeholder);
+}
+
+.add-item button {
+    background: var(--btn-primary);
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.add-item button:hover {
+    background: var(--btn-primary-hover);
+}
+
+.list {
+    padding: 0;
+}
+
+.list-item {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+    line-height: 1.4;
+    background: transparent;
+}
+
+.list-item:hover {
+    background: var(--bg-hover);
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.list-item.claimed .checkbox {
+    background: var(--color-claimed);
+    border-color: var(--color-claimed);
+    position: relative;
+}
+
+.list-item.claimed .checkbox::after {
+    content: '✓';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+.item-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.item-text {
+    font-size: 17px;
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.list-item.claimed .item-text {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.tag {
+    background: var(--color-tag);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.empty-state {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+.start-view {
+    padding: 60px 24px;
+    text-align: center;
+}
+
+.start-view h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+}
+
+.start-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.start-form input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 17px;
+    color: var(--text-primary);
+    outline: none;
+    margin-bottom: 16px;
+    background: var(--bg-input);
+    transition: all 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.start-form input:focus {
+    border-color: var(--btn-primary);
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.button-primary {
+    background: var(--btn-primary);
+    color: white;
+}
+
+.button-primary:hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+}
+
+.button-secondary {
+    background: var(--btn-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.button-secondary:hover:not(:disabled) {
+    background: var(--toolbar-hover);
+    border: 1px solid var(--btn-primary);
+}
+
+.button-secondary:disabled {
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.header-with-back {
+    position: relative;
+}
+
+.back-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.back-button:hover {
+    color: var(--btn-primary);
+    background: var(--toolbar-hover);
+}
+
+.arrow-icon {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.sublist-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sublist-section {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sublist-header {
+    padding: 20px 24px 12px 24px;
+    background: var(--bg-section);
+}
+
+.sublist-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sublist-add-item {
+    padding: 12px 24px 16px 24px;
+    display: flex;
+    gap: 8px;
+    background: var(--bg-section);
+}
+
+.sublist-add-item input {
+    flex: 1;
+    border: none;
+    background: var(--bg-input);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: var(--text-primary);
+    outline: none;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.sublist-add-item input::placeholder {
+    color: var(--text-placeholder);
+}
+
+.sublist-add-item button {
+    background: var(--btn-primary);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.sublist-add-item button:hover {
+    background: var(--btn-primary-hover);
+}
+
+.sublist-items {
+    padding: 0;
+}
+
+.sublist-section:last-child {
+    border-bottom: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .toolbar {
+        position: static;
+        width: 100%;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+        width: 100%;
+    }
+
+    body {
+        padding: 20px 10px;
+    }
+}

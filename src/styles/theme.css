@@ -1,0 +1,106 @@
+/* Import handwritten font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+/* CSS Variables for theming */
+:root[data-theme="light"] {
+    /* Background colors */
+    --bg-body: #f5f5f5;
+    --bg-container: #fefdf8;
+    --bg-section: #f8f7f2;
+    --bg-input: white;
+    --bg-hover: #f8f7f2;
+
+    /* Border colors */
+    --border-color: #e5e5e0;
+
+    /* Text colors */
+    --text-primary: #333;
+    --text-secondary: #999;
+    --text-placeholder: #999;
+
+    /* Button colors */
+    --btn-primary: #007aff;
+    --btn-primary-hover: #0051d5;
+    --btn-secondary: #e5e5e0;
+
+    /* Status colors */
+    --color-claimed: #34c759;
+    --color-tag: #007aff;
+
+    /* Toolbar colors */
+    --toolbar-bg: rgba(255, 255, 255, 0.95);
+    --toolbar-border: rgba(0, 0, 0, 0.1);
+    --toolbar-hover: #f0f0f0;
+
+    /* Line paper effect */
+    --line-color: rgba(0, 122, 255, 0.1);
+
+    /* Warning colors */
+    --warning-bg: #fff8e1;
+    --warning-border: #ffe082;
+    --warning-text: #795548;
+}
+
+:root[data-theme="dark"] {
+    /* Background colors */
+    --bg-body: #1a1a1a;
+    --bg-container: #2a2a2a;
+    --bg-section: #333333;
+    --bg-input: #3a3a3a;
+    --bg-hover: #3a3a3a;
+
+    /* Border colors */
+    --border-color: #444;
+
+    /* Text colors */
+    --text-primary: #e0e0e0;
+    --text-secondary: #999;
+    --text-placeholder: #666;
+
+    /* Button colors */
+    --btn-primary: #0a84ff;
+    --btn-primary-hover: #409cff;
+    --btn-secondary: #3a3a3a;
+
+    /* Status colors */
+    --color-claimed: #30d158;
+    --color-tag: #0a84ff;
+
+    /* Toolbar colors */
+    --toolbar-bg: rgba(42, 42, 42, 0.95);
+    --toolbar-border: rgba(255, 255, 255, 0.1);
+    --toolbar-hover: #3a3a3a;
+
+    /* Line paper effect */
+    --line-color: rgba(10, 132, 255, 0.1);
+
+    /* Warning colors */
+    --warning-bg: #3d3013;
+    --warning-border: #665127;
+    --warning-text: #ffb74d;
+}
+
+/* Default to light theme */
+:root {
+    --bg-body: #f5f5f5;
+    --bg-container: #fefdf8;
+    --bg-section: #f8f7f2;
+    --bg-input: white;
+    --bg-hover: #f8f7f2;
+    --border-color: #e5e5e0;
+    --text-primary: #333;
+    --text-secondary: #999;
+    --text-placeholder: #999;
+    --btn-primary: #007aff;
+    --btn-primary-hover: #0051d5;
+    --btn-secondary: #e5e5e0;
+    --color-claimed: #34c759;
+    --color-tag: #007aff;
+    --toolbar-bg: rgba(255, 255, 255, 0.95);
+    --toolbar-border: rgba(0, 0, 0, 0.1);
+    --toolbar-hover: #f0f0f0;
+    --line-color: rgba(0, 122, 255, 0.1);
+    --warning-bg: #fff8e1;
+    --warning-border: #ffe082;
+    --warning-text: #795548;
+}
